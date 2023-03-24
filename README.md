@@ -3,6 +3,7 @@ Warp, tokio and xactor for yahooo-finance
 
 => ```rust
 //unfortunatly the **tail async fn** does not work propelly. Aparently the future is not send  
+// An update is coming!
 
 async fn tail(n: usize, req: State) -> Result<impl warp::Reply, Rejection>{
 
