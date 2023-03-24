@@ -1,0 +1,40 @@
+{
+	"folders": [
+		{
+			"path": "../../github/web3-smartcontract-token"
+		},
+		{
+			"path": "../../github/signature-server"
+		},
+		{
+			"path": "../../github/warp-tokio-actors"
+		},
+		{
+			"path": "../../github/etherscan-app"
+		},
+		{
+			"path": "../../github/trunk/examples"
+		},
+		{
+			"path": "../../github/async-tide-crypto"
+		},
+		{
+			"path": "../../xactor-test"
+		},
+		{
+			"path": "../../github/warp-tokio-crypto"
+		},
+		{
+			"path": "../../solution 3"
+		},
+		{
+			"path": "../../solution_3"
+		},
+		{
+			"path": "../../solution_3 copy"
+		},
+		{
+			"path": ".."
+		}
+	]
+}
