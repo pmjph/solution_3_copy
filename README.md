@@ -2,13 +2,7 @@ tokio-warp-xactor-yahoo
 Warp, tokio and xactor for yahooo-finance
 
 => ```rust
-//unfortunatly the **tail async fn** does not work propelly. Aparently the future is not send  
-// An update is coming!
+The project is not complete, a thread need to be code, and a loop in this thread
 
-async fn tail(n: usize, req: State) -> Result<impl warp::Reply, Rejection>{
-
-    let data = req.lock().await.as_ref().unwrap().call(BufferDataRequest { n }).await.unwrap();
-
-    Ok(warp::reply::json(&data))
-}
+an update will come soon
 ```

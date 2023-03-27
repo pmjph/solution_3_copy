@@ -3,7 +3,7 @@ use chrono::prelude::*;
 use clap::Parser;
 use std::collections::VecDeque;
 use tokio::sync::{ Mutex, MutexGuard};
-use std::sync::{Arc};
+use std::sync::Arc;
 use xactor::*;
 mod actors;
 mod signal;
@@ -18,7 +18,7 @@ use warp::{Filter, Rejection};
 ///
 /// Number of items in the ring buffer
 ///
-const BUFFER_SIZE: usize = 2000;
+const BUFFER_SIZE: usize = 50000;
 
 #[derive(Parser, Debug)]
 #[clap(
@@ -83,31 +83,26 @@ async fn main() -> std::result::Result<(), Rejection> {
     let data_actor_route = warp::path!("tail"/usize)
         .and(warp::get())
         .and(state_filter.clone())
-        .and_then(tail);
+       .and_then(tail);
     
     let routes = root
         .or(data_actor_route);
 
-    //warp::serve(routes).run(([127, 0, 0, 1], 5000)).await;
-    warp::serve(routes).run(([127, 0, 0, 1], 4321)).await;
-    // CSV header
-    println!("period start,symbol,price,change %,min,max,30d avg");
-    'outer: loop {
-        sleep(Duration::from_millis(30000)).await;
-        println!("30000 ms have elapsed");
-        let now = Utc::now(); // Period end for this fetch
-        for symbol in &symbols {
-            if let Err(e) = Broker::from_registry().await.map_err(|e| CustomReject(e))?.publish(QuoteRequest {
-                symbol: symbol.clone(),
-                from,
-                to: now,
-            }) {
-                eprint!("{}", e);
-                println!("{}", e);
-                break 'outer;
-            }
+    //todo: make this a thread and a loop in this thread
+    let now = Utc::now(); 
+    for symbol in &symbols {
+        if let Err(e) = Broker::from_registry().await.map_err(|e| CustomReject(e))?.publish(QuoteRequest {
+            symbol: symbol.clone(),
+            from,
+            to: now,
+        }){
+            eprint!("{}", e);
+            println!("{}", e);
         }
     }
+
+    warp::serve(routes).run(([127, 0, 0, 1], 5000)).await;
     
+
     Ok(())
 }
