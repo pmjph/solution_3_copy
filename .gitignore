@@ -16,4 +16,4 @@ Cargo.lock
 
 .DS_Store
 
-web3-smartcontract-token.code-workspace
+src/web3-smartcontract-token.code-workspace
